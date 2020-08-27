@@ -35,6 +35,28 @@
 		<brave.opentracing.version>0.37.2</brave.opentracing.version>
 		<grpc.spring.boot.version>3.5.6</grpc.spring.boot.version>
 	</properties>
+	<build>
+		<plugins>
+			<plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+                <configuration>
+                    <activeRecipes>
+                        <recipe>org.openrewrite.spring</recipe>
+                    </activeRecipes>
+					<sourceTypes>
+						<type>java</type>
+					</sourceTypes>
+					<activeStyles>
+						<style>io.moderne.spring.style</style>
+					</activeStyles>
+                    <metricsUri>LOG</metricsUri>
+                    <configLocation>${maven.multiModuleProjectDirectory}/rewrite.yml</configLocation>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
