@@ -139,7 +139,7 @@ class SkipPatternConfiguration {
 
 		@Bean
 		@ConditionalOnBean(ManagementServerProperties.class)
-		public SingleSkipPattern skipPatternForManagementServerProperties(
+		SingleSkipPattern skipPatternForManagementServerProperties(
 				Environment environment,
 				final ManagementServerProperties managementServerProperties) {
 			return () -> getPatternForManagementServerProperties(environment,
@@ -212,7 +212,7 @@ class SkipPatternConfiguration {
 
 		@Bean
 		@ConditionalOnManagementPort(ManagementPortType.SAME)
-		public SingleSkipPattern skipPatternForActuatorEndpointsSamePort(
+		SingleSkipPattern skipPatternForActuatorEndpointsSamePort(
 				Environment environment, final ServerProperties serverProperties,
 				final WebEndpointProperties webEndpointProperties,
 				final EndpointsSupplier<ExposableWebEndpoint> endpointsSupplier) {
@@ -225,7 +225,7 @@ class SkipPatternConfiguration {
 		@ConditionalOnManagementPort(ManagementPortType.DIFFERENT)
 		@ConditionalOnProperty(name = "management.server.servlet.context-path",
 				havingValue = "/", matchIfMissing = true)
-		public SingleSkipPattern skipPatternForActuatorEndpointsDifferentPort(
+		SingleSkipPattern skipPatternForActuatorEndpointsDifferentPort(
 				Environment environment, final ServerProperties serverProperties,
 				final WebEndpointProperties webEndpointProperties,
 				final EndpointsSupplier<ExposableWebEndpoint> endpointsSupplier) {

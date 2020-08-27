@@ -75,7 +75,7 @@ class TraceWebClientAutoConfiguration {
 	static class RestTemplateConfig {
 
 		@Bean
-		public TracingClientHttpRequestInterceptor tracingClientHttpRequestInterceptor(
+		TracingClientHttpRequestInterceptor tracingClientHttpRequestInterceptor(
 				HttpTracing httpTracing) {
 			return (TracingClientHttpRequestInterceptor) TracingClientHttpRequestInterceptor
 					.create(httpTracing);

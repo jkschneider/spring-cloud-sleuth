@@ -48,8 +48,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -116,7 +115,7 @@ public class WebClientDiscoveryExceptionTests {
 	@FeignClient("exceptionservice")
 	public interface TestFeignInterfaceWithException {
 
-		@RequestMapping(method = RequestMethod.GET, value = "/")
+		@GetMapping("/")
 		ResponseEntity<String> shouldFailToConnect();
 
 	}
@@ -139,7 +138,7 @@ public class WebClientDiscoveryExceptionTests {
 
 		@LoadBalanced
 		@Bean
-		public RestTemplate restTemplate() {
+		RestTemplate restTemplate() {
 			return new RestTemplate();
 		}
 

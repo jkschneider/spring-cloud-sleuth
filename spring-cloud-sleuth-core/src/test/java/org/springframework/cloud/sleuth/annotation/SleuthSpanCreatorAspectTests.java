@@ -403,7 +403,7 @@ public class SleuthSpanCreatorAspectTests {
 	protected static class TestConfiguration {
 
 		@Bean
-		public TestBeanInterface testBean() {
+		TestBeanInterface testBean() {
 			return new TestBean();
 		}
 

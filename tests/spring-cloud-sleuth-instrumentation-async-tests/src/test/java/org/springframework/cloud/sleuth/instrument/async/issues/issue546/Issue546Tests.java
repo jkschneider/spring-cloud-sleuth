@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.AsyncRestTemplate;
@@ -87,13 +87,13 @@ class Controller {
 		this.tracer = tracer;
 	}
 
-	@RequestMapping("/bean")
+	@GetMapping("/bean")
 	public HogeBean bean() {
 		log.info("(/bean) I got a request!");
 		return new HogeBean("test", 18);
 	}
 
-	@RequestMapping("/trace-async-rest-template")
+	@GetMapping("/trace-async-rest-template")
 	public void asyncTest(@RequestParam(required = false) boolean isSleep)
 			throws InterruptedException {
 		log.info("(/trace-async-rest-template) I got a request!");

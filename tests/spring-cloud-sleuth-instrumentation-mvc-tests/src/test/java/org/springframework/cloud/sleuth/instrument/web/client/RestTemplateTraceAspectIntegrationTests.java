@@ -46,9 +46,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
@@ -193,7 +192,7 @@ public class RestTemplateTraceAspectIntegrationTests {
 	public static class Config {
 
 		@Bean
-		public RestTemplate restTemplate() {
+		RestTemplate restTemplate() {
 			return new RestTemplate();
 		}
 
@@ -203,7 +202,7 @@ public class RestTemplateTraceAspectIntegrationTests {
 		}
 
 		@Bean
-		public AsyncRestTemplate asyncRestTemplate(Tracing tracing) {
+		AsyncRestTemplate asyncRestTemplate(Tracing tracing) {
 			AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 			asyncRestTemplate.setInterceptors(Collections.singletonList(
 					TracingAsyncClientHttpRequestInterceptor.create(tracing)));
@@ -238,19 +237,19 @@ public class RestTemplateTraceAspectIntegrationTests {
 			this.traceId = null;
 		}
 
-		@RequestMapping(value = "/issue1047_end", method = RequestMethod.GET,
+		@GetMapping("/issue1047_end",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String issue1047() {
 			return "should_filter_out_this_endpoint";
 		}
 
-		@RequestMapping(value = "/issue1047_start", method = RequestMethod.GET,
+		@GetMapping("/issue1047_start",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String issue1047Start() {
 			return callAndReturnIssue1047();
 		}
 
-		@RequestMapping(value = "/", method = RequestMethod.GET,
+		@GetMapping("/",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String home(
 				@RequestHeader(value = "X-B3-SpanId", required = false) String traceId) {
@@ -258,7 +257,7 @@ public class RestTemplateTraceAspectIntegrationTests {
 			return "trace=" + this.getTraceId();
 		}
 
-		@RequestMapping(value = "/customTag", method = RequestMethod.GET,
+		@GetMapping("/customTag",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String customTag(
 				@RequestHeader(value = "X-B3-TraceId", required = false) String traceId) {
@@ -266,20 +265,20 @@ public class RestTemplateTraceAspectIntegrationTests {
 			return "trace=" + this.getTraceId();
 		}
 
-		@RequestMapping(value = "/asyncRestTemplate", method = RequestMethod.GET,
+		@GetMapping("/asyncRestTemplate",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String asyncRestTemplate()
 				throws ExecutionException, InterruptedException {
 			return callViaAsyncRestTemplateAndReturnOk();
 		}
 
-		@RequestMapping(value = "/syncPing", method = RequestMethod.GET,
+		@GetMapping("/syncPing",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public String syncPing() {
 			return callAndReturnOk();
 		}
 
-		@RequestMapping(value = "/callablePing", method = RequestMethod.GET,
+		@GetMapping("/callablePing",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public Callable<String> asyncPing() {
 			return new Callable<String>() {
@@ -290,7 +289,7 @@ public class RestTemplateTraceAspectIntegrationTests {
 			};
 		}
 
-		@RequestMapping(value = "/webAsyncTaskPing", method = RequestMethod.GET,
+		@GetMapping("/webAsyncTaskPing",
 				produces = MediaType.TEXT_PLAIN_VALUE)
 		public WebAsyncTask<String> webAsyncTaskPing() {
 			return new WebAsyncTask<>(new Callable<String>() {

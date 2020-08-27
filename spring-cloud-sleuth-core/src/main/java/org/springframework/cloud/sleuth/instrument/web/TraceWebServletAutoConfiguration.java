@@ -74,7 +74,7 @@ class TraceWebServletAutoConfiguration {
 	}
 
 	@Bean
-	public FilterRegistrationBean traceWebFilter(BeanFactory beanFactory,
+	FilterRegistrationBean traceWebFilter(BeanFactory beanFactory,
 			SleuthWebProperties webProperties) {
 		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(
 				new LazyTracingFilter(beanFactory));
@@ -87,7 +87,7 @@ class TraceWebServletAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public TracingFilter tracingFilter(HttpTracing tracing) {
+	TracingFilter tracingFilter(HttpTracing tracing) {
 		return (TracingFilter) TracingFilter.create(tracing);
 	}
 

@@ -54,8 +54,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -276,7 +275,7 @@ public class TraceFilterWebIntegrationTests {
 
 		private static final Log log = LogFactory.getLog(GoodController.class);
 
-		@RequestMapping("/good")
+		@GetMapping("/good")
 		public String beGood() {
 			log.info("Good!");
 			return "good";
@@ -287,12 +286,11 @@ public class TraceFilterWebIntegrationTests {
 	@RestController
 	public static class NullParameterController {
 
-		@RequestMapping("/null-parameter")
+		@GetMapping("/null-parameter")
 		@ContinueSpan
 		public String nullParameter(
-				@SpanTag(key = "foo", expression = "(#root?:1000)+1") @RequestParam(
-						value = "bar", required = false) Integer param) {
-			return "ok param=" + param;
+				@SpanTag(key = "foo", expression = "(#root?:1000)+1") @RequestParam(required = false) Integer bar) {
+			return "ok param=" + bar;
 		}
 
 	}
@@ -303,13 +301,13 @@ public class TraceFilterWebIntegrationTests {
 		private static final Log log = LogFactory
 				.getLog(ExceptionThrowingController.class);
 
-		@RequestMapping("/")
+		@GetMapping("/")
 		public void throwException() {
 			log.info("Throws exception");
 			throw new RuntimeException("Throwing exception");
 		}
 
-		@RequestMapping(path = "/test_bad_request", method = RequestMethod.GET)
+		@GetMapping("/test_bad_request")
 		public ResponseEntity<?> processFail() {
 			log.info("Test bad request");
 			return ResponseEntity.badRequest().build();

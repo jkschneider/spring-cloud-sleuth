@@ -41,8 +41,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -98,7 +97,7 @@ class TestController {
 
 	private final static Logger logger = LoggerFactory.getLogger(TestController.class);
 
-	@RequestMapping(value = "sleuthtest", method = RequestMethod.GET)
+	@GetMapping("sleuthtest")
 	public ResponseEntity<String> testSleuth(@RequestParam String greeting) {
 		if (greeting.equalsIgnoreCase("hello")) {
 			return new ResponseEntity<>("Hello World", HttpStatus.OK);

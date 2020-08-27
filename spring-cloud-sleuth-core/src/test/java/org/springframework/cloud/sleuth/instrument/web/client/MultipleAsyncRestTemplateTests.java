@@ -54,7 +54,7 @@ import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.AsyncRestTemplate;
 
@@ -158,7 +158,7 @@ public class MultipleAsyncRestTemplateTests {
 	static class Config {
 
 		@Bean(name = "customAsyncRestTemplate")
-		public AsyncRestTemplate traceAsyncRestTemplate() {
+		AsyncRestTemplate traceAsyncRestTemplate() {
 			return new AsyncRestTemplate(asyncClientFactory(),
 					clientHttpRequestFactory());
 		}
@@ -259,7 +259,7 @@ class MyRestController {
 		this.tracer = tracer;
 	}
 
-	@RequestMapping("/foo")
+	@GetMapping("/foo")
 	String foo() {
 		return this.tracer.currentSpan().context().traceIdString();
 	}

@@ -36,9 +36,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,8 +46,8 @@ import static org.assertj.core.api.BDDAssertions.then;
 @FeignClient(name = "no-name", url = "http://localhost:9978")
 interface MyNameRemote {
 
-	@RequestMapping(value = "/name/{id}", method = RequestMethod.GET)
-	String getName(@PathVariable("id") String id);
+	@GetMapping("/name/{id}")
+	String getName(@PathVariable String id);
 
 }
 
@@ -100,28 +99,28 @@ public class Issue393Tests {
 class Application {
 
 	@Bean
-	public DemoController demoController(MyNameRemote myNameRemote) {
+	DemoController demoController(MyNameRemote myNameRemote) {
 		return new DemoController(myNameRemote);
 	}
 
 	// issue #513
 	@Bean
-	public OkHttpClient myOkHttpClient() {
+	OkHttpClient myOkHttpClient() {
 		return new OkHttpClient();
 	}
 
 	@Bean
-	public feign.Logger.Level feignLoggerLevel() {
+	feign.Logger.Level feignLoggerLevel() {
 		return feign.Logger.Level.BASIC;
 	}
 
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
 	@Bean
-	public SpanHandler testSpanHandler() {
+	SpanHandler testSpanHandler() {
 		return new TestSpanHandler();
 	}
 
@@ -136,13 +135,13 @@ class DemoController {
 		this.myNameRemote = myNameRemote;
 	}
 
-	@RequestMapping("/hello/{name}")
-	public String getHello(@PathVariable("name") String name) {
+	@GetMapping("/hello/{name}")
+	public String getHello(@PathVariable String name) {
 		return this.myNameRemote.getName(name) + " foo";
 	}
 
-	@RequestMapping("/name/{name}")
-	public String getName(@PathVariable("name") String name) {
+	@GetMapping("/name/{name}")
+	public String getName(@PathVariable String name) {
 		return name;
 	}
 

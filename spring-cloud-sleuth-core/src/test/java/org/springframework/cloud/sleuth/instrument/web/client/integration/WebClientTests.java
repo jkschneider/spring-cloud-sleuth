@@ -83,9 +83,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -492,16 +491,16 @@ public class WebClientTests {
 	@FeignClient("fooservice")
 	public interface TestFeignInterface {
 
-		@RequestMapping(method = RequestMethod.GET, value = "/traceid")
+		@GetMapping("/traceid")
 		ResponseEntity<String> getTraceId();
 
-		@RequestMapping(method = RequestMethod.GET, value = "/notrace")
+		@GetMapping("/notrace")
 		ResponseEntity<String> getNoTrace();
 
-		@RequestMapping(method = RequestMethod.GET, value = "/")
+		@GetMapping("/")
 		ResponseEntity<Map<String, String>> headers();
 
-		@RequestMapping(method = RequestMethod.GET, value = "/noresponse")
+		@GetMapping("/noresponse")
 		ResponseEntity<Void> noResponseBody();
 
 	}
@@ -543,7 +542,7 @@ public class WebClientTests {
 
 		@LoadBalanced
 		@Bean
-		public RestTemplate restTemplate() {
+		RestTemplate restTemplate() {
 			return new RestTemplate();
 		}
 
@@ -627,22 +626,22 @@ public class WebClientTests {
 
 		Span span;
 
-		@RequestMapping(value = "/notrace", method = RequestMethod.GET)
+		@GetMapping("/notrace")
 		public String notrace(
-				@RequestHeader(name = "b3", required = false) String b3Single) {
-			then(b3Single).isNotNull();
+				@RequestHeader(required = false) String b3) {
+			then(b3).isNotNull();
 			return "OK";
 		}
 
-		@RequestMapping(value = "/traceid", method = RequestMethod.GET)
-		public String traceId(@RequestHeader("b3") String b3Single) {
+		@GetMapping("/traceid")
+		public String traceId(@RequestHeader String b3) {
 			TraceContextOrSamplingFlags traceContext = B3SingleFormat
-					.parseB3SingleFormat(b3Single);
+					.parseB3SingleFormat(b3);
 			then(traceContext.context()).isNotNull();
-			return b3Single;
+			return b3;
 		}
 
-		@RequestMapping("/")
+		@GetMapping("/")
 		public Map<String, String> home(@RequestHeader HttpHeaders headers) {
 			Map<String, String> map = new HashMap<>();
 			for (String key : headers.keySet()) {
@@ -651,10 +650,10 @@ public class WebClientTests {
 			return map;
 		}
 
-		@RequestMapping("/noresponse")
-		public void noResponse(@RequestHeader("b3") String b3Single) {
+		@GetMapping("/noresponse")
+		public void noResponse(@RequestHeader String b3) {
 			TraceContextOrSamplingFlags traceContext = B3SingleFormat
-					.parseB3SingleFormat(b3Single);
+					.parseB3SingleFormat(b3);
 			then(traceContext.context()).isNotNull();
 		}
 
@@ -671,13 +670,13 @@ public class WebClientTests {
 	@RestController
 	public static class WebClientController {
 
-		@RequestMapping(value = "/issue1462", method = RequestMethod.GET)
+		@GetMapping("/issue1462")
 		public ResponseEntity<String> issue1462() {
 			System.out.println("GOT IT");
 			return ResponseEntity.status(499).body("issue1462");
 		}
 
-		@RequestMapping(value = { "/skip", "/doNotSkip" }, method = RequestMethod.GET)
+		@GetMapping({ "/skip", "/doNotSkip" })
 		String skip() {
 			return "ok";
 		}
@@ -691,7 +690,7 @@ public class WebClientTests {
 		private int port = 0;
 
 		@Bean
-		public ServiceInstanceListSupplier serviceInstanceListSupplier(Environment env) {
+		ServiceInstanceListSupplier serviceInstanceListSupplier(Environment env) {
 			return ServiceInstanceListSupplier.fixed(env)
 					.instance(this.port, "fooservice").build();
 		}

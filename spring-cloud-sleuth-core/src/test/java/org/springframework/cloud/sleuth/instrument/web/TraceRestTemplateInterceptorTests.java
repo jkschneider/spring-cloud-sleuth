@@ -40,8 +40,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.test.web.client.MockMvcClientHttpRequestFactory;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -202,7 +202,7 @@ public class TraceRestTemplateInterceptorTests {
 
 		Span span;
 
-		@RequestMapping("/")
+		@GetMapping("/")
 		public Map<String, String> home(@RequestHeader HttpHeaders headers) {
 			this.span = TraceRestTemplateInterceptorTests.this.tracer.currentSpan();
 			Map<String, String> map = new HashMap<>();
@@ -211,11 +211,11 @@ public class TraceRestTemplateInterceptorTests {
 			return map;
 		}
 
-		@RequestMapping("/foo")
+		@GetMapping("/foo")
 		public void foo() {
 		}
 
-		@RequestMapping("/exception")
+		@GetMapping("/exception")
 		public Map<String, String> exception() {
 			throw new RuntimeException("foo");
 		}

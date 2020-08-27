@@ -34,17 +34,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @FeignClient("participants")
 interface ParticipantsClient {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/races/{raceId}")
-	List<Object> getParticipants(@PathVariable("raceId") String raceId);
+	@GetMapping("/races/{raceId}")
+	List<Object> getParticipants(@PathVariable String raceId);
 
 }
 
@@ -80,22 +79,22 @@ class SleuthSampleApplication {
 	private ParticipantsBean participantsBean;
 
 	@Bean
-	public RestTemplate getRestTemplate() {
+	RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
 
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home() {
 		LOG.info("you called home");
 		return "Hello World";
 	}
 
-	@RequestMapping("/callhome")
+	@GetMapping("/callhome")
 	public String callHome() {
 		LOG.info("calling home");
 		return this.restTemplate.getForObject("http://localhost:" + port(), String.class);

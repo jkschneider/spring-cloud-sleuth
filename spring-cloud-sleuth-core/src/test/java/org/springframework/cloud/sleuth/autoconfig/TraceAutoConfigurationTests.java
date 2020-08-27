@@ -144,7 +144,6 @@ public class TraceAutoConfigurationTests {
 
 		List<BaggageField> fields;
 
-		@Autowired
 		Baggage(Tracing tracing) {
 			// When predefined baggage fields exist, the result !=
 			// TraceContextOrSamplingFlags.EMPTY

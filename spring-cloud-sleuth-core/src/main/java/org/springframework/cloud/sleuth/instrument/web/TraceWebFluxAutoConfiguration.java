@@ -41,7 +41,7 @@ import org.springframework.context.annotation.Configuration;
 class TraceWebFluxAutoConfiguration {
 
 	@Bean
-	public TraceWebFilter traceFilter(BeanFactory beanFactory) {
+	TraceWebFilter traceFilter(BeanFactory beanFactory) {
 		return new TraceWebFilter(beanFactory);
 	}
 

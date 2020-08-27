@@ -39,15 +39,14 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.sleuth.instrument.web.HttpClientSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
 @FeignClient(name = "foo", url = "http://foo")
 interface MyNameRemote {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/")
 	String get();
 
 }
@@ -92,23 +91,23 @@ public class Issue502Tests {
 class Application {
 
 	@Bean
-	public Client client() {
+	Client client() {
 		return new MyClient();
 	}
 
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
 	@Bean
-	public SpanHandler testSpanHandler() {
+	SpanHandler testSpanHandler() {
 		return new TestSpanHandler();
 	}
 
 	@Bean(name = HttpClientSampler.NAME)
 	@HttpClientSampler
-	public SamplerFunction<HttpRequest> clientHttpSampler() {
+	SamplerFunction<HttpRequest> clientHttpSampler() {
 		return arg -> true;
 	}
 

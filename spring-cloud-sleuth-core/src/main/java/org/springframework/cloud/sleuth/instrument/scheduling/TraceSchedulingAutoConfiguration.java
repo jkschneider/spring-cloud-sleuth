@@ -47,7 +47,7 @@ import org.springframework.context.annotation.Configuration;
 class TraceSchedulingAutoConfiguration {
 
 	@Bean
-	public TraceSchedulingAspect traceSchedulingAspect(Tracer tracer,
+	TraceSchedulingAspect traceSchedulingAspect(Tracer tracer,
 			SleuthSchedulingProperties sleuthSchedulingProperties) {
 		String skipPatternString = sleuthSchedulingProperties.getSkipPattern();
 		Pattern skipPattern = skipPatternString != null

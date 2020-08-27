@@ -57,7 +57,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.filter.GenericFilterBean;
@@ -332,19 +332,19 @@ public class TraceFilterIntegrationTests extends AbstractMvcIntegrationTest {
 			@Autowired
 			private Tracer tracer;
 
-			@RequestMapping("/ping")
+			@GetMapping("/ping")
 			public String ping() {
 				log.info("ping");
 				span = this.tracer.currentSpan();
 				return "ping";
 			}
 
-			@RequestMapping("/throwsException")
+			@GetMapping("/throwsException")
 			public void throwsException() {
 				throw new RuntimeException();
 			}
 
-			@RequestMapping("/deferred")
+			@GetMapping("/deferred")
 			public DeferredResult<String> deferredMethod() {
 				log.info("deferred");
 				span = this.tracer.currentSpan();
@@ -354,7 +354,7 @@ public class TraceFilterIntegrationTests extends AbstractMvcIntegrationTest {
 				return result;
 			}
 
-			@RequestMapping("/future")
+			@GetMapping("/future")
 			public CompletableFuture<String> future() {
 				log.info("future");
 				return CompletableFuture.completedFuture("ping");

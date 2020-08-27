@@ -112,7 +112,7 @@ public class TraceQuartzAutoConfigurationTest {
 	public static class SchedulerConfig {
 
 		@Bean
-		public Scheduler scheduler() throws Exception {
+		Scheduler scheduler() throws Exception {
 			Scheduler scheduler = mock(Scheduler.class);
 			when(scheduler.getListenerManager()).thenReturn(mock(ListenerManager.class));
 			return scheduler;
@@ -125,12 +125,12 @@ public class TraceQuartzAutoConfigurationTest {
 	public static class TracingConfig {
 
 		@Bean
-		public Tracing tracing() {
+		Tracing tracing() {
 			return mock(Tracing.class);
 		}
 
 		@Bean
-		public Tracer tracer() {
+		Tracer tracer() {
 			return mock(Tracer.class);
 		}
 

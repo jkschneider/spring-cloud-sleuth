@@ -47,8 +47,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -109,12 +108,12 @@ public class ManuallyCreatedDelegateLoadBalancerFeignClientTests {
 class Application {
 
 	@Bean
-	public Client myDelegateClient() {
+	Client myDelegateClient() {
 		return new MyDelegateClient();
 	}
 
 	@Bean
-	public AnnotatedFeignClient annotatedFeignClient(Client client, Decoder decoder,
+	AnnotatedFeignClient annotatedFeignClient(Client client, Decoder decoder,
 			Encoder encoder, Contract contract) {
 		return Feign.builder().client(client).encoder(encoder).decoder(decoder)
 				.contract(contract).target(new HardCodedTarget<>(
@@ -122,18 +121,18 @@ class Application {
 	}
 
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
 	@Bean
-	public SpanHandler testSpanHandler() {
+	SpanHandler testSpanHandler() {
 		return new TestSpanHandler();
 	}
 
 	@Bean(name = HttpClientSampler.NAME)
 	@HttpClientSampler
-	public SamplerFunction<HttpRequest> clientHttpSampler() {
+	SamplerFunction<HttpRequest> clientHttpSampler() {
 		return arg -> true;
 	}
 
@@ -161,7 +160,7 @@ class MyDelegateClient implements Client {
 @FeignClient(name = "foo", url = "http://foo")
 interface AnnotatedFeignClient {
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@GetMapping("/test")
 	String get();
 
 }

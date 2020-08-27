@@ -48,7 +48,7 @@ import org.springframework.context.annotation.Bean;
 class TraceGrpcAutoConfiguration {
 
 	@Bean
-	public GrpcTracing grpcTracing(RpcTracing rpcTracing) {
+	GrpcTracing grpcTracing(RpcTracing rpcTracing) {
 		return GrpcTracing.create(rpcTracing);
 	}
 
@@ -62,7 +62,7 @@ class TraceGrpcAutoConfiguration {
 	// This is wrapper around gRPC's managed channel builder that is spring-aware
 	@Bean
 	@ConditionalOnMissingBean(SpringAwareManagedChannelBuilder.class)
-	public SpringAwareManagedChannelBuilder managedChannelBuilder(
+	SpringAwareManagedChannelBuilder managedChannelBuilder(
 			Optional<List<GrpcManagedChannelBuilderCustomizer>> customizers) {
 		return new SpringAwareManagedChannelBuilder(customizers);
 	}

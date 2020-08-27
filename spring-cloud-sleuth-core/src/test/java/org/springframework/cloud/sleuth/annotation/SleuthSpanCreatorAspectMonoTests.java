@@ -663,12 +663,12 @@ public class SleuthSpanCreatorAspectMonoTests {
 	protected static class TestConfiguration {
 
 		@Bean
-		public TestBeanInterface testBean(Tracer tracer) {
+		TestBeanInterface testBean(Tracer tracer) {
 			return new TestBean(tracer);
 		}
 
 		@Bean
-		public TestBeanOuter testBeanOuter(Tracer tracer, TestBeanInterface testBean) {
+		TestBeanOuter testBeanOuter(Tracer tracer, TestBeanInterface testBean) {
 			return new TestBeanOuter(tracer, testBean);
 		}
 

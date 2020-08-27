@@ -36,12 +36,12 @@ public class SampleSleuthApplication {
 	}
 
 	@Bean
-	public RestTemplate restTemplate() {
+	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
 	@Bean
-	public Sampler sampler() {
+	Sampler sampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 

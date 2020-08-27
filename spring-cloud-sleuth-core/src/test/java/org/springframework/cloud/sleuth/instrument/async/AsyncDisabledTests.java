@@ -65,7 +65,7 @@ public class AsyncDisabledTests {
 
 		@Bean
 		@ConditionalOnMissingBean(name = "traceSenderThreadPool")
-		public ThreadPoolTaskScheduler traceSenderThreadPool() {
+		ThreadPoolTaskScheduler traceSenderThreadPool() {
 			return new ThreadPoolTaskScheduler();
 		}
 

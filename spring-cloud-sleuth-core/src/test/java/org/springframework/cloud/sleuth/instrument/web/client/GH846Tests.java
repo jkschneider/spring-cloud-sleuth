@@ -50,12 +50,12 @@ public class GH846Tests {
 	static class App {
 
 		@Bean
-		public RestTemplate myRestTemplate() {
+		RestTemplate myRestTemplate() {
 			return new RestTemplate();
 		}
 
 		@Bean
-		public MyBean myBean() {
+		MyBean myBean() {
 			return new MyBean();
 		}
 

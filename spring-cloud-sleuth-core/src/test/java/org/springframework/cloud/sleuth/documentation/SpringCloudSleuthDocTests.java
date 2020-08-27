@@ -288,7 +288,7 @@ public class SpringCloudSleuthDocTests {
 
 		// tag::always_sampler[]
 		@Bean
-		public Sampler defaultSampler() {
+		Sampler defaultSampler() {
 			return Sampler.ALWAYS_SAMPLE;
 		}
 		// end::always_sampler[]

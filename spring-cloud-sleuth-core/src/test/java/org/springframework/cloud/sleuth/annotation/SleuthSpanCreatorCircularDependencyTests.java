@@ -66,12 +66,12 @@ public class SleuthSpanCreatorCircularDependencyTests {
 		}
 
 		@Bean
-		public Service1 service1() {
+		Service1 service1() {
 			return new Service1();
 		}
 
 		@Bean
-		public Service2 service2() {
+		Service2 service2() {
 			return new Service2();
 		}
 

@@ -48,7 +48,7 @@ public class EndpointWithCyclicDependenciesTests {
 	static class ClientConfig {
 
 		@Bean
-		public Client client(HttpTracing httpTracing) {
+		Client client(HttpTracing httpTracing) {
 			// imagine this instruments the client.
 			return new Client();
 		}

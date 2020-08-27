@@ -45,8 +45,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.fail;
@@ -112,7 +111,7 @@ public class WebClientExceptionTests {
 	@FeignClient("exceptionservice")
 	public interface TestFeignInterfaceWithException {
 
-		@RequestMapping(method = RequestMethod.GET, value = "/")
+		@GetMapping("/")
 		ResponseEntity<String> shouldFailToConnect();
 
 	}
@@ -133,7 +132,7 @@ public class WebClientExceptionTests {
 
 		@LoadBalanced
 		@Bean
-		public RestTemplate restTemplate() {
+		RestTemplate restTemplate() {
 			SimpleClientHttpRequestFactory clientHttpRequestFactory = new SimpleClientHttpRequestFactory();
 			clientHttpRequestFactory.setReadTimeout(1);
 			clientHttpRequestFactory.setConnectTimeout(1);
@@ -156,7 +155,7 @@ public class WebClientExceptionTests {
 	public static class ExceptionServiceLoadBalancerClientConfiguration {
 
 		@Bean
-		public ServiceInstanceListSupplier serviceInstanceListSupplier(Environment env) {
+		ServiceInstanceListSupplier serviceInstanceListSupplier(Environment env) {
 			return ServiceInstanceListSupplier.fixed(env)
 					.instance("invalid.host.to.break.tests", 1234, "exceptionservice")
 					.build();
