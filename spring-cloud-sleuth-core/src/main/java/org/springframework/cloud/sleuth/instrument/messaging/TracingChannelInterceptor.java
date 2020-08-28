@@ -107,7 +107,6 @@ final class TracingChannelInterceptor extends ChannelInterceptorAdapter
 	// special case of a Stream
 	private final Class<?> directWithAttributesChannelClass;
 
-	@Autowired
 	TracingChannelInterceptor(Tracing tracing, SleuthMessagingProperties properties) {
 		this(tracing, properties, MessageHeaderPropagation.INSTANCE,
 				MessageHeaderPropagation.INSTANCE);

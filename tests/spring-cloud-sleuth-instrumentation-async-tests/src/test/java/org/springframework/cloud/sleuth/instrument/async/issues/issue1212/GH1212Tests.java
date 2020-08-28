@@ -121,7 +121,7 @@ public class GH1212Tests {
 	static class DefaultTaskExecutorConfig {
 
 		@Bean(name = AsyncExecutionAspectSupport.DEFAULT_TASK_EXECUTOR_BEAN_NAME)
-		public Executor taskExecutor() {
+		Executor taskExecutor() {
 			return new SimpleAsyncTaskExecutor("defaultTaskExecutor");
 		}
 
@@ -136,7 +136,7 @@ public class GH1212Tests {
 		@Bean
 		// there's the task
 		@Primary
-		public TaskExecutor singleTaskExecutor() {
+		TaskExecutor singleTaskExecutor() {
 			return new SimpleAsyncTaskExecutor("singleTaskExecutor");
 		}
 
@@ -150,12 +150,12 @@ public class GH1212Tests {
 	static class MultipleTaskExecutorConfig {
 
 		@Bean
-		public TaskExecutor multipleTaskExecutor1() {
+		TaskExecutor multipleTaskExecutor1() {
 			return new SimpleAsyncTaskExecutor("multipleTaskExecutor1");
 		}
 
 		@Bean
-		public TaskExecutor multipleTaskExecutor2() {
+		TaskExecutor multipleTaskExecutor2() {
 			return new SimpleAsyncTaskExecutor("multipleTaskExecutor2");
 		}
 
@@ -168,7 +168,7 @@ public class GH1212Tests {
 	static class CustomAsyncConfigurerConfig {
 
 		@Bean
-		public AsyncConfigurer customAsyncConfigurer() {
+		AsyncConfigurer customAsyncConfigurer() {
 			return new AsyncConfigurerSupport() {
 				@Override
 				public Executor getAsyncExecutor() {

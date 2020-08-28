@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.AsyncRestTemplate;
 
@@ -158,13 +158,13 @@ public class TraceWebAsyncClientAutoConfigurationTests {
 	@RestController
 	public static class MyController {
 
-		@RequestMapping("/foo")
+		@GetMapping("/foo")
 		String foo() throws Exception {
 			Thread.sleep(100);
 			return "foo";
 		}
 
-		@RequestMapping("/blowsup")
+		@GetMapping("/blowsup")
 		String blowsup() throws Exception {
 			Thread.sleep(100);
 			throw new RuntimeException("boom");

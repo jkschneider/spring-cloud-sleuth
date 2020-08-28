@@ -59,7 +59,7 @@ class TraceWebAsyncClientAutoConfiguration {
 	static class AsyncRestTemplateConfig {
 
 		@Bean
-		public TracingAsyncClientHttpRequestInterceptor asyncTracingClientHttpRequestInterceptor(
+		TracingAsyncClientHttpRequestInterceptor asyncTracingClientHttpRequestInterceptor(
 				HttpTracing httpTracing) {
 			return (TracingAsyncClientHttpRequestInterceptor) TracingAsyncClientHttpRequestInterceptor
 					.create(httpTracing);

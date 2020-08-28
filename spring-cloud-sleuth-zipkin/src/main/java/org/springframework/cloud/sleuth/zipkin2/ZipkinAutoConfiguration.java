@@ -119,7 +119,7 @@ public class ZipkinAutoConfiguration {
 
 	@Bean(REPORTER_BEAN_NAME)
 	@ConditionalOnMissingBean(name = REPORTER_BEAN_NAME)
-	public Reporter<Span> reporter(ReporterMetrics reporterMetrics,
+	Reporter<Span> reporter(ReporterMetrics reporterMetrics,
 			ZipkinProperties zipkin, @Qualifier(SENDER_BEAN_NAME) Sender sender) {
 		CheckResult checkResult = checkResult(sender, 1_000L);
 		logCheckResult(sender, checkResult);
@@ -214,7 +214,7 @@ public class ZipkinAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public ZipkinRestTemplateCustomizer zipkinRestTemplateCustomizer(
+	ZipkinRestTemplateCustomizer zipkinRestTemplateCustomizer(
 			ZipkinProperties zipkinProperties) {
 		return new DefaultZipkinRestTemplateCustomizer(zipkinProperties);
 	}
@@ -238,7 +238,7 @@ public class ZipkinAutoConfiguration {
 		private Environment environment;
 
 		@Bean
-		public EndpointLocator zipkinEndpointLocator() {
+		EndpointLocator zipkinEndpointLocator() {
 			return new DefaultEndpointLocator(null, this.serverProperties,
 					this.environment, this.zipkinProperties, this.inetUtils);
 		}
@@ -268,7 +268,7 @@ public class ZipkinAutoConfiguration {
 		private Registration registration;
 
 		@Bean
-		public EndpointLocator zipkinEndpointLocator() {
+		EndpointLocator zipkinEndpointLocator() {
 			return new DefaultEndpointLocator(this.registration, this.serverProperties,
 					this.environment, this.zipkinProperties, this.inetUtils);
 		}

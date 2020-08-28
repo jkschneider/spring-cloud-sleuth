@@ -59,7 +59,7 @@ import org.springframework.util.ObjectUtils;
 class TraceSpringIntegrationAutoConfiguration {
 
 	@Bean
-	public GlobalChannelInterceptorWrapper tracingGlobalChannelInterceptorWrapper(
+	GlobalChannelInterceptorWrapper tracingGlobalChannelInterceptorWrapper(
 			TracingChannelInterceptor interceptor, SleuthMessagingProperties properties) {
 		GlobalChannelInterceptorWrapper wrapper = new GlobalChannelInterceptorWrapper(
 				interceptor);

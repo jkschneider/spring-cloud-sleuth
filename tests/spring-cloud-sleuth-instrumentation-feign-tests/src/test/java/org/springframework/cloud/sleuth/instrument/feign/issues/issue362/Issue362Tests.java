@@ -47,6 +47,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,10 +60,10 @@ import static org.assertj.core.api.BDDAssertions.then;
 		configuration = CustomConfig.class)
 interface MyFeignClient {
 
-	@RequestMapping("/service/ok")
+	@GetMapping("/service/ok")
 	String ok();
 
-	@RequestMapping("/service/not-ok")
+	@GetMapping("/service/not-ok")
 	String exp();
 
 }
@@ -138,32 +139,32 @@ public class Issue362Tests {
 class Application {
 
 	@Bean
-	public ServiceTestController serviceTestController() {
+	ServiceTestController serviceTestController() {
 		return new ServiceTestController();
 	}
 
 	@Bean
-	public SleuthTestController sleuthTestController() {
+	SleuthTestController sleuthTestController() {
 		return new SleuthTestController();
 	}
 
 	@Bean
-	public Logger.Level feignLoggerLevel() {
+	Logger.Level feignLoggerLevel() {
 		return Logger.Level.FULL;
 	}
 
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
 	@Bean
-	public FeignComponentAsserter testHolder() {
+	FeignComponentAsserter testHolder() {
 		return new FeignComponentAsserter();
 	}
 
 	@Bean
-	public SpanHandler testSpanHandler() {
+	SpanHandler testSpanHandler() {
 		return new TestSpanHandler();
 	}
 
@@ -179,17 +180,17 @@ class FeignComponentAsserter {
 class CustomConfig {
 
 	@Bean
-	public ErrorDecoder errorDecoder(FeignComponentAsserter feignComponentAsserter) {
+	ErrorDecoder errorDecoder(FeignComponentAsserter feignComponentAsserter) {
 		return new CustomErrorDecoder(feignComponentAsserter);
 	}
 
 	@Bean
-	public Retryer retryer() {
+	Retryer retryer() {
 		return new Retryer.Default();
 	}
 
 	@Bean
-	public Client client(FeignComponentAsserter feignComponentAsserter) {
+	Client client(FeignComponentAsserter feignComponentAsserter) {
 		return new CustomClient(feignComponentAsserter);
 	}
 
@@ -239,12 +240,12 @@ class CustomConfig {
 @RequestMapping(path = "/service")
 class ServiceTestController {
 
-	@RequestMapping("/ok")
+	@GetMapping("/ok")
 	public String ok() throws InterruptedException, ExecutionException {
 		return "I'm OK";
 	}
 
-	@RequestMapping("/not-ok")
+	@GetMapping("/not-ok")
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public String notOk() throws InterruptedException, ExecutionException {
 		return "Not OK";
@@ -259,12 +260,12 @@ class SleuthTestController {
 	@Autowired
 	private MyFeignClient myFeignClient;
 
-	@RequestMapping("/test-ok")
+	@GetMapping("/test-ok")
 	public String ok() throws InterruptedException, ExecutionException {
 		return this.myFeignClient.ok();
 	}
 
-	@RequestMapping("/test-not-ok")
+	@GetMapping("/test-not-ok")
 	public String notOk() throws InterruptedException, ExecutionException {
 		return this.myFeignClient.exp();
 	}

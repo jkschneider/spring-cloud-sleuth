@@ -26,8 +26,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -60,7 +59,7 @@ public class TraceNoWebEnvironmentTests {
 		@FeignClient(name = "google", url = "https://www.google.com/")
 		public interface SomeFeignClient {
 
-			@RequestMapping(value = "/", method = RequestMethod.GET)
+			@GetMapping("/")
 			String createSomeTestRequest();
 
 		}

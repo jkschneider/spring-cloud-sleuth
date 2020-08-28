@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -53,7 +53,7 @@ public class SampleController
 
 	private int port;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String hi() throws InterruptedException {
 		log.info("hi!");
 		Thread.sleep(this.random.nextInt(1000));
@@ -63,7 +63,7 @@ public class SampleController
 		return "hi/" + s;
 	}
 
-	@RequestMapping("/call")
+	@GetMapping("/call")
 	public Callable<String> call() {
 		return new Callable<String>() {
 			@Override
@@ -79,14 +79,14 @@ public class SampleController
 		};
 	}
 
-	@RequestMapping("/async")
+	@GetMapping("/async")
 	public String async() throws InterruptedException {
 		log.info("async");
 		this.controller.background();
 		return "ho";
 	}
 
-	@RequestMapping("/hi2")
+	@GetMapping("/hi2")
 	public String hi2() throws InterruptedException {
 		log.info("hi2!");
 		int millis = this.random.nextInt(1000);
@@ -95,7 +95,7 @@ public class SampleController
 		return "hi2";
 	}
 
-	@RequestMapping("/traced")
+	@GetMapping("/traced")
 	public String traced() throws InterruptedException {
 		log.info("traced");
 		Span span = this.tracer.nextSpan().name("http:customTraceEndpoint");
@@ -110,7 +110,7 @@ public class SampleController
 		return "traced/" + s;
 	}
 
-	@RequestMapping("/start")
+	@GetMapping("/start")
 	public String start() throws InterruptedException {
 		log.info("start");
 		int millis = this.random.nextInt(1000);

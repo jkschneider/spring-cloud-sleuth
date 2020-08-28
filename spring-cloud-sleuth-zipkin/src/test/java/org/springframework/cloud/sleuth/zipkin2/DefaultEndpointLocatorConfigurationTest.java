@@ -188,7 +188,7 @@ public class DefaultEndpointLocatorConfigurationTest {
 	public static class ConfigurationWithRegistration {
 
 		@Bean
-		public Registration getRegistration() {
+		Registration getRegistration() {
 			return new Registration() {
 				@Override
 				public String getServiceId() {
@@ -231,7 +231,7 @@ public class DefaultEndpointLocatorConfigurationTest {
 		static EndpointLocator locator = Mockito.mock(EndpointLocator.class);
 
 		@Bean
-		public EndpointLocator getEndpointLocator() {
+		EndpointLocator getEndpointLocator() {
 			return locator;
 		}
 

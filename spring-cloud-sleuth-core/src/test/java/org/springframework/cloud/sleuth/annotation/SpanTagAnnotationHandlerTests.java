@@ -104,7 +104,7 @@ public class SpanTagAnnotationHandlerTests {
 
 		// tag::custom_resolver[]
 		@Bean(name = "myCustomTagValueResolver")
-		public TagValueResolver tagValueResolver() {
+		TagValueResolver tagValueResolver() {
 			return parameter -> "Value from myCustomTagValueResolver";
 		}
 		// end::custom_resolver[]

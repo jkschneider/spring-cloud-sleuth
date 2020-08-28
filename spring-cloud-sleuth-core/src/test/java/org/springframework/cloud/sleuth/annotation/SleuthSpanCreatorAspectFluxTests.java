@@ -621,7 +621,7 @@ public class SleuthSpanCreatorAspectFluxTests {
 	protected static class TestConfiguration {
 
 		@Bean
-		public TestBeanInterface testBean(Tracer tracer) {
+		TestBeanInterface testBean(Tracer tracer) {
 			return new TestBean(tracer);
 		}
 

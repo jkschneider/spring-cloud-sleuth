@@ -94,7 +94,7 @@ public class WebClientBraveTests extends ITSpringConfiguredReactorClient {
 		 */
 		@Bean
 		@Order(0)
-		public WebClientCustomizer clientConnectorCustomizer(HttpClient httpClient,
+		WebClientCustomizer clientConnectorCustomizer(HttpClient httpClient,
 				URI baseUrl) {
 			return (builder) -> builder.baseUrl(baseUrl.toString())
 					.clientConnector(new ReactorClientHttpConnector(httpClient));

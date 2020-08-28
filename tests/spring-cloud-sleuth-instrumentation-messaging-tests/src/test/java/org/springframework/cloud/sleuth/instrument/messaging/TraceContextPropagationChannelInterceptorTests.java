@@ -96,7 +96,7 @@ public class TraceContextPropagationChannelInterceptorTests {
 	static class App {
 
 		@Bean
-		public QueueChannel channel() {
+		QueueChannel channel() {
 			return new QueueChannel();
 		}
 

@@ -61,13 +61,13 @@ class AsyncDefaultAutoConfiguration {
 	@Bean
 	@ConditionalOnProperty(value = "spring.sleuth.scheduled.enabled",
 			matchIfMissing = true)
-	public static ExecutorBeanPostProcessor executorBeanPostProcessor(
+	static ExecutorBeanPostProcessor executorBeanPostProcessor(
 			BeanFactory beanFactory) {
 		return new ExecutorBeanPostProcessor(beanFactory);
 	}
 
 	@Bean
-	public TraceAsyncAspect traceAsyncAspect(Tracer tracer, SpanNamer spanNamer) {
+	TraceAsyncAspect traceAsyncAspect(Tracer tracer, SpanNamer spanNamer) {
 		return new TraceAsyncAspect(tracer, spanNamer);
 	}
 

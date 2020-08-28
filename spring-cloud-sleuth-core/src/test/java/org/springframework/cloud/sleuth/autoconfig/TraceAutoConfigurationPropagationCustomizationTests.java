@@ -74,7 +74,7 @@ public class TraceAutoConfigurationPropagationCustomizationTests {
 	static class CustomPropagationFactoryBuilderConfig {
 
 		@Bean
-		public BaggagePropagation.FactoryBuilder b3Single() {
+		BaggagePropagation.FactoryBuilder b3Single() {
 			return BaggagePropagation.newFactoryBuilder(B3SinglePropagation.FACTORY);
 		}
 

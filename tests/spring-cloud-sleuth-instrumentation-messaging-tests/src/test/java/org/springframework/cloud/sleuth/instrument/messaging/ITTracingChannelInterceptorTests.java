@@ -180,7 +180,7 @@ public class ITTracingChannelInterceptorTests implements MessageHandler {
 		}
 
 		@Bean
-		public MessagingTemplate messagingTemplate() {
+		MessagingTemplate messagingTemplate() {
 			return new MessagingTemplate(directChannel());
 		}
 

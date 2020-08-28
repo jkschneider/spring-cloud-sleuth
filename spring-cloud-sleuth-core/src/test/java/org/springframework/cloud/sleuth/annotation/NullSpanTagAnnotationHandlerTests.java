@@ -104,7 +104,7 @@ public class NullSpanTagAnnotationHandlerTests {
 	protected static class TestConfiguration {
 
 		@Bean
-		public TagValueResolver tagValueResolver() {
+		TagValueResolver tagValueResolver() {
 			return parameter -> null;
 		}
 

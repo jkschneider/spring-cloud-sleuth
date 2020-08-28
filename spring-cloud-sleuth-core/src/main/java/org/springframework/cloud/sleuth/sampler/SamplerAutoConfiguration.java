@@ -69,7 +69,7 @@ public class SamplerAutoConfiguration {
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.sleuth.sampler.refresh.enabled",
 				matchIfMissing = true)
-		public Sampler defaultTraceSampler(SamplerProperties config) {
+		Sampler defaultTraceSampler(SamplerProperties config) {
 			return sampler(config);
 		}
 
@@ -77,7 +77,7 @@ public class SamplerAutoConfiguration {
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.sleuth.sampler.refresh.enabled",
 				havingValue = "false")
-		public Sampler defaultNonRefreshScopeTraceSampler(SamplerProperties config) {
+		Sampler defaultNonRefreshScopeTraceSampler(SamplerProperties config) {
 			return sampler(config);
 		}
 
@@ -101,7 +101,7 @@ public class SamplerAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		public Sampler defaultTraceSampler(SamplerProperties config) {
+		Sampler defaultTraceSampler(SamplerProperties config) {
 			return samplerFromProps(config);
 		}
 

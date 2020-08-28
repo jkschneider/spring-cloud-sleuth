@@ -28,8 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.PollableChannel;
 import org.springframework.messaging.support.GenericMessage;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,7 +40,7 @@ public class HelloWorldRestController {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@RequestMapping(path = "getHelloWorldMessage", method = RequestMethod.GET,
+	@GetMapping("getHelloWorldMessage",
 			produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getHelloWorld() throws Exception {
 

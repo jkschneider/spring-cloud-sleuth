@@ -44,8 +44,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.GenericFilterBean;
@@ -112,7 +112,7 @@ public class TraceCustomFilterResponseInjectorTests {
 		}
 
 		@Bean
-		public RestTemplate restTemplate() {
+		RestTemplate restTemplate() {
 			return new RestTemplate();
 		}
 
@@ -147,7 +147,7 @@ public class TraceCustomFilterResponseInjectorTests {
 	@RestController
 	static class CustomRestController {
 
-		@RequestMapping("/headers")
+		@GetMapping("/headers")
 		public Map<String, String> headers(@RequestHeader HttpHeaders headers) {
 			Map<String, String> map = new HashMap<>();
 			for (String key : headers.keySet()) {

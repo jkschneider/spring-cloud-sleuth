@@ -48,7 +48,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -261,36 +261,36 @@ public class Issue410Tests {
 class AppConfig {
 
 	@Bean
-	public Sampler testSampler() {
+	Sampler testSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
 	@Bean
-	public RestTemplate restTemplate() {
+	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
 	@Bean("taskScheduler")
-	public Executor myScheduler() {
+	Executor myScheduler() {
 		return Executors.newSingleThreadExecutor();
 	}
 
 	@Bean
-	public Executor poolTaskExecutor() {
+	Executor poolTaskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.initialize();
 		return executor;
 	}
 
 	@Bean
-	public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
+	ThreadPoolTaskScheduler threadPoolTaskScheduler() {
 		ThreadPoolTaskScheduler executor = new ThreadPoolTaskScheduler();
 		executor.initialize();
 		return executor;
 	}
 
 	@Bean
-	public ScheduledThreadPoolExecutor scheduledThreadPoolExecutor() {
+	ScheduledThreadPoolExecutor scheduledThreadPoolExecutor() {
 		return new ScheduledThreadPoolExecutor(10);
 	}
 
@@ -435,7 +435,7 @@ class Application {
 	@Autowired
 	Tracer tracer;
 
-	@RequestMapping("/with_pool")
+	@GetMapping("/with_pool")
 	public String withPool() {
 		log.info("Executing with pool.");
 		this.asyncTask.runWithPool();
@@ -443,40 +443,40 @@ class Application {
 
 	}
 
-	@RequestMapping("/without_pool")
+	@GetMapping("/without_pool")
 	public String withoutPool() {
 		log.info("Executing without pool.");
 		this.asyncTask.runWithoutPool();
 		return this.tracer.currentSpan().context().traceIdString();
 	}
 
-	@RequestMapping("/completable")
+	@GetMapping("/completable")
 	public String completable() throws ExecutionException, InterruptedException {
 		log.info("Executing completable");
 		return this.asyncTask.completableFutures().context().traceIdString();
 	}
 
-	@RequestMapping("/taskScheduler")
+	@GetMapping("/taskScheduler")
 	public String taskScheduler() throws ExecutionException, InterruptedException {
 		log.info("Executing completable via task scheduler");
 		return this.asyncTask.taskScheduler().context().traceIdString();
 	}
 
-	@RequestMapping("/threadPoolTaskScheduler_submit")
+	@GetMapping("/threadPoolTaskScheduler_submit")
 	public String threadPoolTaskSchedulerSubmit()
 			throws ExecutionException, InterruptedException {
 		log.info("Executing completable via ThreadPoolTaskScheduler");
 		return this.asyncTask.threadPoolTaskSchedulerSubmit().context().traceIdString();
 	}
 
-	@RequestMapping("/threadPoolTaskScheduler_schedule")
+	@GetMapping("/threadPoolTaskScheduler_schedule")
 	public String threadPoolTaskSchedulerSchedule()
 			throws ExecutionException, InterruptedException {
 		log.info("Executing completable via ThreadPoolTaskScheduler");
 		return this.asyncTask.threadPoolTaskSchedulerSchedule().context().traceIdString();
 	}
 
-	@RequestMapping("/scheduledThreadPoolExecutor")
+	@GetMapping("/scheduledThreadPoolExecutor")
 	public String scheduledThreadPoolExecutor()
 			throws ExecutionException, InterruptedException {
 		log.info("Executing completable via ScheduledThreadPoolExecutor");
@@ -488,7 +488,7 @@ class Application {
 	 * @return service bean
 	 */
 	@Bean
-	public MyService executorService() {
+	MyService executorService() {
 		return new MyService() {
 			@Override
 			public void execute(Runnable command) {

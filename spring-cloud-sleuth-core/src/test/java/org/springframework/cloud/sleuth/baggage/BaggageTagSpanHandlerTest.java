@@ -79,7 +79,7 @@ public class BaggageTagSpanHandlerTest {
 	static class Config {
 
 		@Bean
-		public SpanHandler testSpanHandler() {
+		SpanHandler testSpanHandler() {
 			return new TestSpanHandler();
 		}
 

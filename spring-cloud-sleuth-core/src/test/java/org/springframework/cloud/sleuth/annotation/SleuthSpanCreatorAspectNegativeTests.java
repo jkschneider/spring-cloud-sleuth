@@ -143,17 +143,17 @@ public class SleuthSpanCreatorAspectNegativeTests {
 		}
 
 		@Bean
-		public NotAnnotatedTestBeanInterface testBean() {
+		NotAnnotatedTestBeanInterface testBean() {
 			return new NotAnnotatedTestBean();
 		}
 
 		@Bean
-		public TestBeanInterface annotatedTestBean() {
+		TestBeanInterface annotatedTestBean() {
 			return new TestBean();
 		}
 
 		@Bean
-		public Sampler sampler() {
+		Sampler sampler() {
 			return Sampler.ALWAYS_SAMPLE;
 		}
 

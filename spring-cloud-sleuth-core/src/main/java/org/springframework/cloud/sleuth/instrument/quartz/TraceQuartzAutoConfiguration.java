@@ -56,7 +56,7 @@ class TraceQuartzAutoConfiguration implements InitializingBean {
 	BeanFactory beanFactory;
 
 	@Bean
-	public TracingJobListener tracingJobListener() {
+	TracingJobListener tracingJobListener() {
 		return new TracingJobListener(tracing);
 	}
 

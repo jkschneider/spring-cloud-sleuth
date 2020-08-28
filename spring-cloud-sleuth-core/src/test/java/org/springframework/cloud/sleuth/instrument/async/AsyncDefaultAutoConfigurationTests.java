@@ -45,7 +45,7 @@ public class AsyncDefaultAutoConfigurationTests {
 	static class Config {
 
 		@Bean
-		public ScheduledExecutorService createExecutorService() {
+		ScheduledExecutorService createExecutorService() {
 			return Executors.newSingleThreadScheduledExecutor();
 		}
 
